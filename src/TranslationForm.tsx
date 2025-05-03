@@ -31,24 +31,28 @@ const TranslationForm = () => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setData(null);
         setIsLoading(true);
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "model": "deepseek/deepseek-r1:free",
-                "messages": [
-                    {
-                        "role": "user",
-                        "content": `Translate the following sentence into ${values.translateTo} language. Return only the translated sentence without any explanation or extra text:\n\n${values.originalText}`
-
-
-                    }
-                ]
-            })
-        });
+        const response = await fetch(
+            "https://openrouter.ai/api/v1/chat/completions",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+                    "HTTP-Referer":
+                        "https://language-translator-deepseek.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
+                    "X-Title": "Language Translator", // Optional. Site title for rankings on openrouter.ai.
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    model: "deepseek/deepseek-r1:free",
+                    messages: [
+                        {
+                            role: "user",
+                            content: `Translate the following sentence into ${values.translateTo} language. Return only the translated sentence without any explanation or extra text:\n\n${values.originalText}`,
+                        },
+                    ],
+                }),
+            }
+        );
         const data = await response.json();
         setData(data.choices[0]?.message?.content);
         setIsLoading(false)
