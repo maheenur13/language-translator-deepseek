@@ -31,32 +31,47 @@ const TranslationForm = () => {
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setData(null);
         setIsLoading(true);
-        const response = await fetch(
-            "https://openrouter.ai/api/v1/chat/completions",
-            {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer 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`,
-                    "HTTP-Referer":
-                        "https://language-translator-deepseek.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
-                    "X-Title": "Language Translator", // Optional. Site title for rankings on openrouter.ai.
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    model: "deepseek/deepseek-r1:free",
-                    messages: [
-                        {
-                            role: "user",
-                            content: `Translate the following sentence into ${values.translateTo} language. Return only the translated sentence without any explanation or extra text:\n\n${values.originalText}`,
-                        },
-                    ],
-                }),
-            }
-        );
-        const data = await response.json();
-        setData(data.choices[0]?.message?.content);
-        setIsLoading(false)
+        try {
+            const response = await fetch(
+                "https://openrouter.ai/api/v1/chat/completions",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
 
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        model: "deepseek/deepseek-r1:free",
+                        messages: [
+                            {
+                                role: "user",
+                                content: `Translate the following sentence into ${values.translateTo} language. Return only the translated sentence without any explanation or extra text:\n\n${values.originalText}`,
+                            },
+                        ],
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('API Error:', {
+                    status: response.status,
+                    statusText: response.statusText,
+                    error: errorData
+                });
+                message.error(`Translation failed: ${errorData.error?.message || 'Unknown error'}`);
+                return;
+            }
+
+            const data = await response.json();
+            setData(data.choices[0]?.message?.content);
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            message.error('Failed to connect to translation service');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
