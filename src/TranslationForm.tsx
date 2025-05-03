@@ -36,7 +36,7 @@ const TranslationForm = () => {
             {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+                    Authorization: `Bearer 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`,
                     "HTTP-Referer":
                         "https://language-translator-deepseek.netlify.app/", // Optional. Site URL for rankings on openrouter.ai.
                     "X-Title": "Language Translator", // Optional. Site title for rankings on openrouter.ai.
