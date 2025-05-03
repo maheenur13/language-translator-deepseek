@@ -1,0 +1,192 @@
+#root {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.branding {
+  text-align: center;
+  padding: 2rem 0;
+  background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brand-name {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #00ff87, #60efff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+  letter-spacing: 2px;
+}
+
+.github-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.github-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.app-container {
+  min-height: 100vh;
+  position: relative;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-branding {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+  animation: float 6s ease-in-out infinite;
+}
+
+.brand-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(26, 26, 26, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.profile-image-container {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background-image: url("https://github.com/maheenur13.png");
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.username-link {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  #root {
+    padding: 0.5rem;
+  }
+
+  .app-container {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  /* Adjust form width for mobile */
+  .ant-form {
+    width: 100% !important;
+    min-width: auto !important;
+  }
+
+  /* Adjust textarea size */
+  .ant-input {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Adjust select dropdown */
+  .ant-select {
+    width: 100% !important;
+  }
+
+  /* Adjust button size */
+  .ant-btn {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-branding {
+    bottom: 5px;
+    right: 5px;
+  }
+
+  .brand-content {
+    padding: 4px 8px;
+    gap: 6px;
+  }
+
+  .profile-image-container {
+    width: 28px;
+    height: 28px;
+  }
+
+  .username-link {
+    font-size: 0.8rem;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes overlayPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
